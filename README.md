@@ -9,6 +9,11 @@ Simutrans server for Docker
 
 ```docker run -it -e SIMUTRANS_SERVERNAME=<Servername> -e SIMUTRANS_SAVEGAME=<Savefile> -v <savefilepath>:/opt/simutrans/save -d -p <port>:13353 simutrans:stable```
 
+## What's New? - 更新履歴
+ - 2020/04/26  
+   Support new version (v121.0 r8870)  
+   新しいバージョンに対応しました。(v121.0 r8870)  
+
 ## Description - 詳細
  In Dockerfile, download version 120.4.1(r8588) source, ./configure with server options ,compile simutrans with fix a bugs, download and unzip paksets....  
  so It was very looong road for me.;-)  
