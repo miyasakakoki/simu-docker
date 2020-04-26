@@ -8,11 +8,11 @@ RUN apt-get update \
 
 WORKDIR /tmp
 
-RUN svn export --username anon  svn://servers.simutrans.org/simutrans/trunk@8588 
+RUN svn export --username anon  svn://servers.simutrans.org/simutrans/trunk@8870
 RUN mv trunk simutrans
 
 # patch POSIX signal
-RUN sed -i -e "s/Received SIGTERM, /Received SIGTERM\", \"/g" simutrans/simsys_posix.cc
+#RUN sed -i -e "s/Received SIGTERM, /Received SIGTERM\", \"/g" simutrans/simsys_posix.cc
 
 # build simutrans
 WORKDIR /tmp/simutrans
@@ -25,9 +25,10 @@ RUN cp -r simutrans /opt/simutrans \
 	&& cp sim /opt/simutrans
 
 # get base pak
-WORKDIR /opt/simutrans
-RUN curl -L -o "/tmp/simupak.zip" "https://downloads.sourceforge.net/project/simutrans/pak64/120-4-1/simupak64-120-4-1.zip" \
-	&& unzip /tmp/simupak.zip -d /opt/
+WORKDIR /opt
+RUN wget "http://downloads.sourceforge.net/project/simutrans/pak64/121-0/simupak64-121-0.zip" && unzip ./simupak64-121-0.zip
+RUN wget "http://downloads.sourceforge.net/project/simutrans/pak64/121-0/simupak64-addon-food-120-4.zip" && unzip ./simupak64-addon-food-120-4.zip
+#RUN wget "https://downloads.sourceforge.net/project/simutrans/pak64/120-4/simupak64-120-4.zip" && unzip ./simupak64-120-4.zip
 
 # Packing the container
 FROM ubuntu:latest
