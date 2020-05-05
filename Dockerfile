@@ -11,9 +11,6 @@ WORKDIR /tmp
 RUN svn export --username anon  svn://servers.simutrans.org/simutrans/trunk@8870
 RUN mv trunk simutrans
 
-# patch POSIX signal
-#RUN sed -i -e "s/Received SIGTERM, /Received SIGTERM\", \"/g" simutrans/simsys_posix.cc
-
 # build simutrans
 WORKDIR /tmp/simutrans
 RUN autoconf \
@@ -28,7 +25,6 @@ RUN cp -r simutrans /opt/simutrans \
 WORKDIR /opt
 RUN wget "http://downloads.sourceforge.net/project/simutrans/pak64/121-0/simupak64-121-0.zip" && unzip ./simupak64-121-0.zip
 RUN wget "http://downloads.sourceforge.net/project/simutrans/pak64/121-0/simupak64-addon-food-120-4.zip" && unzip ./simupak64-addon-food-120-4.zip
-#RUN wget "https://downloads.sourceforge.net/project/simutrans/pak64/120-4/simupak64-120-4.zip" && unzip ./simupak64-120-4.zip
 
 # Packing the container
 FROM ubuntu:latest
@@ -38,7 +34,7 @@ ENV SIMUTRANS_PORT=13353
 ENV SIMUTRANS_PAK="/opt/simutrans/pak"
 ENV SIMUTRANS_SAVEGAME=""
 ENV SIMUTRANS_SERVERNAMAE=""
-RUN ./sim -server 13353 -lang ja -nosound -nomidi -log 1 -debug 3 -singleuser -objects pak  || echo "init fin....."
+RUN ./sim -server 13353 -lang ja -nosound -nomidi -log 1 -debug 3 -objects pak  || echo "init fin....."
 COPY start.sh ./start.sh
 
 CMD ["/opt/simutrans/start.sh"]
